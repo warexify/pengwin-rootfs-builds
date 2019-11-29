@@ -1,3 +1,3 @@
-# pengwin-rootfs-builds
+# minlinux-rootfs-builds
 
-Builds Pengwin rootfs in Azure Pipelines.
+Builds MinLinux rootfs in Azure Pipelines.

@@ -3,10 +3,21 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   variables:
+    ACCEPT_EULA: Y
+    DEBIAN_FRONTEND: noninteractive
     PREBOOTSTRAP_ARCH: ${{ parameters.arch }}
     PREBOOTSTRAP_QEMU_ARCH: ${{ parameters.qemu_arch }}
     PREBOOTSTRAP_RELEASE: testing
   steps:
+  - script: |
+      sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+      sudo apt-get -y -q install apt-transport-https ca-certificates
+      sudo apt-get -y -qq update
+      # sudo apt-get -y -q upgrade
+      sudo apt --fix-broken install -y
+      sudo apt-get -y -q autoremove
+    displayName: 'Update apt cache'
+
   - script: sudo apt-get install -y curl gnupg debootstrap qemu-user-static
     displayName: 'Installing build dependencies'
 
@@ -38,10 +49,10 @@ jobs:
     displayName: 'Installing default` profile'
   
   - script: sudo curl https://raw.githubusercontent.com/WhitewaterFoundry/Pengwin/master/linux_files/setup -so rootfs/etc/setup
-    displayName: 'Installing Pengwin bootstrap script'
+    displayName: 'Installing MinLinux bootstrap script'
   
   - script: sudo chroot rootfs/ /bin/bash -c "bash /etc/setup --silent --install"
-    displayName: 'Running Pengwin bootstrap script'
+    displayName: 'Running MinLinux bootstrap script'
   
   - script: |
       sudo chroot rootfs/ /bin/bash -c "echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen"
