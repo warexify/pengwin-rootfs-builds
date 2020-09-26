@@ -43,7 +43,7 @@ echo 'Installing default profile'
 sudo curl https://salsa.debian.org/rhaist-guest/WSL/raw/master/linux_files/profile -so rootfs/etc/profile
 
 echo 'Installing Pengwin bootstrap script'
-sudo curl https://raw.githubusercontent.com/WhitewaterFoundry/Pengwin/master/linux_files/setup -so rootfs/etc/setup
+sudo curl https://raw.githubusercontent.com/warexify/Pengwin/master/linux_files/setup -so rootfs/etc/setup
 
 echo 'Running Pengwin bootstrap script'
 sudo chroot rootfs/ /bin/bash -c "bash /etc/setup --silent --install"
@@ -90,7 +90,7 @@ echo 'Run tests'
 sudo cp /usr/bin/qemu-"${PREBOOTSTRAP_QEMU_ARCH}"-static rootfs/usr/bin/
 sudo chmod +x rootfs/usr/bin/qemu-"${PREBOOTSTRAP_QEMU_ARCH}"-static
 
-sudo chroot rootfs/ /bin/bash -c "git clone https://github.com/WhitewaterFoundry/pengwin-setup.git"
+sudo chroot rootfs/ /bin/bash -c "git clone https://github.com/warexify/pengwin-setup.git"
 sudo chroot rootfs/ /bin/bash -c "cp -r pengwin-setup/tests /usr/local/bin/ && chmod -R +x /usr/local/bin/tests"
 sudo chroot rootfs/ /bin/bash -c "apt-get -y -q install shunit2"
 sudo chroot rootfs/ /bin/bash -c "cd /usr/local/bin/tests && ./run_tests.sh"
